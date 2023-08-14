@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.reg__heading h1 {
+  color: #11175d;
+  font-family: "Nunito", sans-serif !important;
+  font-size: 34.4px !important;
+  font-weight: bold !important;
+}
+.reg__heading p {
+  color: #000000;
+  font-family: "Nunito", sans-serif !important;
+  font-size: 20.64px !important;
+}
+
+.reg__img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+.reg__left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 69px;
+}
+.reg__input-conatiner {
+  width: 368.09px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 120px;
+}
+.reg__input {
+  width: 100%;
+  margin-top: 56px !important;
+}
