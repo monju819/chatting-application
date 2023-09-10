@@ -58,6 +58,7 @@
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: 13.34px;
+  text-decoration: none;
 }
 .link__text {
   color: #03014c;
@@ -78,4 +79,28 @@
   position: relative;
   top: 41px;
   right: 35px;
+}
+
+.link__container .link {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.forgot__container {
+  background: #999999;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.forgot__box {
+  background: #e6e6e6;
+  padding: 20px;
+  width: 50%;
+}
+.forgot__text {
+  margin-bottom: 10px;
+}
+.forgot__btn {
+  margin-bottom: 15px !important;
 }

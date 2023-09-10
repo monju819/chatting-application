@@ -8,12 +8,14 @@ import {
 import Login from "./pages/Login";
 import { ToastContainer, toast } from "react-toastify";
 import Home from "./pages/Home";
+import Forgot from "./pages/Forgot";
 let router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Registration />} />
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/forgot" element={<Forgot />} />
     </Route>
   )
 );
