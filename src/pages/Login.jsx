@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import bg from "../assets/registration.png";
 import Image from "../components/Image";
 import TextField from "@mui/material/TextField";
@@ -17,9 +17,11 @@ import { toast } from "react-toastify";
 import google from "../assets/Google.png";
 import { activeUser } from "../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { getDatabase, ref, set, push } from "firebase/database";
 const Login = () => {
   let navigate = useNavigate();
   const auth = getAuth();
+  const db = getDatabase();
 
   let dispatch = useDispatch();
 
@@ -80,22 +82,34 @@ const Login = () => {
       setLoad(true);
       signInWithEmailAndPassword(auth, formData.email, formData.password).then(
         (user) => {
-          if (user.user.emailVerified) {
-            navigate("/home");
-            dispatch(activeUser(user.user));
-            localStorage.setItem("user", JSON.stringify(user.user));
-          } else {
-            // setemailError("please verify your email");
-            toast("please verify your email ");
-          }
+          // if (user.user.emailVerified) {
+
+          navigate("/home");
+          dispatch(activeUser(user.user));
+          localStorage.setItem("user", JSON.stringify(user.user));
+
+          // }
+          // else {
+          //   // setemailError("please verify your email");
+          //   toast("please verify your email ");
+          // }
         }
       );
     }
   };
 
   const handleGoogle = () => {
-    signInWithPopup(auth, provider).then((result) => {
+    signInWithPopup(auth, provider).then((user) => {
       navigate("/home");
+      dispatch(activeUser(user.user));
+      localStorage.setItem("user", JSON.stringify(user.user));
+
+      // console.log("google", user.user.displayName);
+      set(push(ref(db, "users/")), {
+        username: user.user.displayName,
+        email: user.user.email,
+        profile_picture: user.user.photoURL,
+      });
     });
   };
 

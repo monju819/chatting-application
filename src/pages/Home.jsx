@@ -1,12 +1,14 @@
-import Button from "@mui/material/Button";
-import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { activeUser } from "../slices/userSlice";
+import Grid from "@mui/material/Grid";
+import GroupList from "../components/GroupList";
+import Friendrequest from "../components/Friendrequest";
+import Friends from "../components/Friends";
+import Mygroups from "../components/Mygroups";
+import Userlist from "../components/Userlist";
+import Blockedusers from "../components/Blockedusers";
 const Home = () => {
-  const auth = getAuth();
-
   let navigate = useNavigate();
   let dispatch = useDispatch();
   let data = useSelector((state) => state.activeUser.value);
@@ -17,17 +19,21 @@ const Home = () => {
     }
   }, []);
 
-  let handleLogOut = () => {
-    signOut(auth).then(() => {
-      dispatch(activeUser(null));
-      localStorage.removeItem("user");
-      navigate("/login");
-    });
-  };
   return (
-    <Button onClick={handleLogOut} variant="contained">
-      LogOut
-    </Button>
+    <Grid container spacing={2}>
+      <Grid item xs={4}>
+        <GroupList />
+        <Friendrequest />
+      </Grid>
+      <Grid item xs={4}>
+        <Friends />
+        <Mygroups />
+      </Grid>
+      <Grid item xs={4}>
+        <Userlist />
+        <Blockedusers />
+      </Grid>
+    </Grid>
   );
 };
 

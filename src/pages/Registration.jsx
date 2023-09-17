@@ -9,14 +9,16 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import { AiFillEye, AiTwotoneEyeInvisible } from "react-icons/ai";
 import { ColorRing } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { getDatabase, ref, set, push } from "firebase/database";
 const Registration = () => {
   const auth = getAuth();
+  const db = getDatabase();
   let navigate = useNavigate();
 
   // let [fullName,setFullName]=useState("")
@@ -46,6 +48,7 @@ const Registration = () => {
     // setemailError("");
     // setFullnameError("");
     // setPasswordError("");
+
     if (e.target.name == "fullname") {
       setFullnameError("");
     }
@@ -85,16 +88,32 @@ const Registration = () => {
       setLoad(true);
 
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then(() => {
-          sendEmailVerification(auth.currentUser).then(() => {
-            setFormData({
-              email: "",
-              fullname: "",
-              password: "",
-            });
-            setLoad(false);
-            toast("Registration successful👍please verify your email ");
+        .then((user) => {
+          updateProfile(auth.currentUser, {
+            displayName: formData.fullname,
+            photoURL:
+              "https://firebasestorage.googleapis.com/v0/b/chatting-application-1023f.appspot.com/o/a.png?alt=media&token=77be0192-c540-4c1f-a7dc-2c669838ea0c",
+          }).then(() => {
+            sendEmailVerification(auth.currentUser)
+              .then(() => {
+                setFormData({
+                  email: "",
+                  fullname: "",
+                  password: "",
+                });
+                setLoad(false);
+                toast("Registration successful👍please verify your email ");
+              })
+              .then(() => {
+                set(ref(db, "users/" + user.user.uid), {
+                  username: formData.fullname,
+                  email: formData.email,
+                  profile_picture:
+                    "https://firebasestorage.googleapis.com/v0/b/chatting-application-1023f.appspot.com/o/a.png?alt=media&token=77be0192-c540-4c1f-a7dc-2c669838ea0c",
+                });
+              });
           });
+
           setTimeout(() => {
             navigate("/login");
           }, 1000);

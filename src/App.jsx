@@ -9,13 +9,20 @@ import Login from "./pages/Login";
 import { ToastContainer, toast } from "react-toastify";
 import Home from "./pages/Home";
 import Forgot from "./pages/Forgot";
+import RootLayout from "./components/RootLayout";
+import Massage from "./pages/Massage";
+import Notification from "./pages/Notification";
 let router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Registration />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/home" element={<Home />} />
       <Route path="/forgot" element={<Forgot />} />
+      <Route path="/" element={<RootLayout />}>
+        <Route path="/home" element={<Home />} />
+        <Route path="/message" element={<Massage />} />
+        <Route path="/notification" element={<Notification />} />
+      </Route>
     </Route>
   )
 );
